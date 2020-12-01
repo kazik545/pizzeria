@@ -107,35 +107,35 @@
           /* toggle active class on element of thisProduct */
           
           thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
-        })
-          /* find all active products */
+        });
+        /* find all active products */
           
-          let activeProducts = document.querySelectorAll(classNames.menuProduct.wrapperActive);
+        let activeProducts = document.querySelectorAll(classNames.menuProduct.wrapperActive);
           
-          console.log(activeProducts);
+        console.log(activeProducts);
           
-          /* START LOOP: for each active product */
-          console.log(thisProduct);
-          for(let activeProduct of activeProducts){
+        /* START LOOP: for each active product */
+        console.log(thisProduct);
+        for(let activeProduct of activeProducts){
             
-            /* START: if the active product isn't the element of thisProduct */
+          /* START: if the active product isn't the element of thisProduct */
             
-            if(activeProduct != thisProduct){
+          if(activeProduct != thisProduct){
               
-              /* remove class active for the active product */
+            /* remove class active for the active product */
               
-              activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
+            activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
               
             
-              /* END: if the active product isn't the element of thisProduct */
+            /* END: if the active product isn't the element of thisProduct */
             
-            }
-          
-            /* END LOOP: for each active product */
-          
           }
+          
+          /* END LOOP: for each active product */
+          
+        }
         
-          /* END: click event listener to trigger */
+        /* END: click event listener to trigger */
         
       }
            
