@@ -63,7 +63,9 @@
       thisProduct.getElements();
       thisProduct.initAccordion();
       thisProduct.initOrderForm();
+      thisProduct.initAmountWidget();
       thisProduct.processOrder();
+      
       console.log('new Product:', thisProduct);
     }
     renderInMenu(){
@@ -95,6 +97,7 @@
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
       thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
+      thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
     }
     initAccordion(){
       const thisProduct = this;
@@ -191,6 +194,10 @@
           
           else if(!optionSelected && option.default){
           
+            /* multiply price by amount */
+
+            price *= thisProduct.AmountWidget.value;
+            
             /* deduct price of option from price */
             
             price -= option.price;
@@ -199,7 +206,7 @@
           }
           
           const images = thisProduct.imageWrapper.querySelector('.' + paramId + '-' + optionId);
-          console.log(images);
+
           if(optionSelected && images){
             images.classList.add(classNames.menuProduct.imageVisible);
           } else if(images) {
@@ -214,6 +221,57 @@
       thisProduct.priceElem.innerHTML = price;
 
     }
+
+    initAmountWidget(){
+      const thisProduct = this;
+
+      thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
+      thisProduct.amountWidgetElem.addEventListener('updated', thisProduct.processOrder());
+    }
+  }
+
+  class AmountWidget {
+    constructor(element){
+      const thisWidget = this;
+      
+      thisWidget.getElements(element);
+      thisWidget.setValue(thisWidget.input.value);
+
+      console.log('AmountWidget:', thisWidget);
+      console.log('constructor arguments:', element);
+    }
+    getElements(element){
+      const thisWidget = this;
+    
+      thisWidget.element = element;
+      thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+      thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
+      thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+    }
+    setValue(value){
+      const thisWidget = this;
+
+      const newValue = parseInt(value);
+
+      /* TODO: Add validation */
+
+      thisWidget.value = newValue;
+      thisWidget.announce();
+      thisWidget.input.value = thisWidget.value;
+    }
+    initActions(){
+      const thisWidget = this;
+      thisWidget.input.addEventListener('change', setValue(value));
+      thisWidget.linkDecrease.addEventListener('click', function(event){event.preventDefault();}, setValue(newValue -= 1));
+      thisWidget.linkIncrease.addEventListener('click', function(event){event.preventDefault();}, setValue(newValue += 1));
+    }
+    announce(){
+      const thisWidget = this;
+
+      const event = new Event('updated');
+      thisWidget.element.dispatchEvent(event);
+    }
+
   }
 
   const app = {
