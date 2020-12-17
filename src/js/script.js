@@ -264,7 +264,11 @@
       if(thisWidget.value != settings.amountWidget.defaultValue && thisWidget.value >= settings.amountWidget.defaultMin && thisWidget.value <= settings.amountWidget.defaultMax){
         thisWidget.value = newValue;
         thisWidget.announce();
-      } else {
+      } if(newValue >= settings.amountWidget.defaultMax){
+        thisWidget.value = settings.amountWidget.defaultMax;
+      } if(newValue <= settings.amountWidget.defaultMin){
+        thisWidget.value = settings.amountWidget.defaultMin;
+      } if(newValue === 'NaN') {
         thisWidget.value = settings.amountWidget.defaultValue;
       }
       thisWidget.input.value = thisWidget.value;
