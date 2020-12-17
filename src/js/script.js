@@ -268,7 +268,7 @@
         thisWidget.value = settings.amountWidget.defaultMax;
       } if(newValue <= settings.amountWidget.defaultMin){
         thisWidget.value = settings.amountWidget.defaultMin;
-      } if(newValue === 'NaN') {
+      } if(newValue === NaN) {
         thisWidget.value = settings.amountWidget.defaultValue;
       }
       thisWidget.input.value = thisWidget.value;
