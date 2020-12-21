@@ -261,18 +261,15 @@
 
       /* TODO: Add validation */
 
-      if(thisWidget.value != settings.amountWidget.defaultValue && thisWidget.value >= settings.amountWidget.defaultMin && thisWidget.value <= settings.amountWidget.defaultMax){
+      if(
+        newValue !== thisWidget.value && 
+        newValue >= settings.amountWidget.defaultMin && 
+        newValue <= settings.amountWidget.defaultMax
+      ) {
         thisWidget.value = newValue;
         thisWidget.announce();
-      } if(newValue >= settings.amountWidget.defaultMax){
-        thisWidget.value = settings.amountWidget.defaultMax;
-      } if(newValue <= settings.amountWidget.defaultMin){
-        thisWidget.value = settings.amountWidget.defaultMin;
-      } if(newValue === NaN) {
-        thisWidget.value = settings.amountWidget.defaultValue;
       }
       thisWidget.input.value = thisWidget.value;
-      thisWidget.announce();
     }
     initActions(){
       const thisWidget = this;
@@ -281,11 +278,11 @@
       });
       thisWidget.linkDecrease.addEventListener('click', function(event){
         event.preventDefault();
-        thisWidget.setValue(thisWidget.value -= 1);
+        thisWidget.setValue(thisWidget.value - 1);
       });
       thisWidget.linkIncrease.addEventListener('click', function(event){
         event.preventDefault(); 
-        thisWidget.setValue(thisWidget.value += 1);
+        thisWidget.setValue(thisWidget.value + 1);
       });
     }
     announce(){
