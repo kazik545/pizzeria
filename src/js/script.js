@@ -99,7 +99,7 @@
       thisProduct.initAmountWidget();
       thisProduct.processOrder();
       
-      console.log('new Product:', thisProduct);
+      
     }
     renderInMenu(){
 
@@ -191,7 +191,7 @@
       /* read all data from the form (using utils.serializeFormToObject) and save it to const formData */
 
       const formData = utils.serializeFormToObject(thisProduct.form);
-      console.log('formData', formData);
+      
       
       /* set variable price to equal thisProduct.data.price */
       
@@ -280,7 +280,7 @@
       const thisProduct = this;
 
       thisProduct.name = thisProduct.data.name;
-      thisProduct.amountWidget = thisProduct.amountWidget.value;
+      thisProduct.amount = thisProduct.amountWidget.value;
       
       app.cart.add(thisProduct);
     
@@ -292,14 +292,13 @@
     constructor(element){
       const thisWidget = this;
       
-      console.log(thisWidget);
+
       thisWidget.getElements(element);
       thisWidget.value = settings.amountWidget.defaultValue;
       thisWidget.setValue(thisWidget.input.value);
       thisWidget.initActions();
 
-      console.log('AmountWidget:', thisWidget);
-      console.log('constructor arguments:', element);
+
     }
     getElements(element){
       const thisWidget = this;
@@ -358,7 +357,6 @@
       thisCart.getElements(element);
       thisCart.initActions();
 
-      console.log('new Cart', thisCart);
     }
     
     getElements(element){
@@ -369,7 +367,8 @@
       thisCart.dom.wrapper = element;
 
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
-
+      
+      thisCart.dom.productList = document.querySelector(select.cart.productList);
     }
     initActions(){
       const thisCart = this;
@@ -384,13 +383,11 @@
 
       console.log('adding product', menuProduct);
 
-      const GeneratedHTML = templates.cartProduct(thisCart.menuProduct);
+      const generatedHTML = templates.cartProduct(menuProduct);
 
-      thisCart.element = utils.createDOMFromHTML(GeneratedHTML);
+      thisCart.element = utils.createDOMFromHTML(generatedHTML);
 
-      const cartContainer = document.querySelector(select.containerOf.cart);
-
-      cartContainer.appendChild(thisCart.element);
+      thisCart.dom.productList.appendChild(thisCart.element);
 
 
 
