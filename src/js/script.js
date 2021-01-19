@@ -354,7 +354,6 @@
     constructor(element){
       const thisCart = this;
       thisCart.deliveryFee = settings.cart.defaultDeliveryFee;
-      console.log(thisCart.deliveryFee);
       thisCart.products = [];
 
       thisCart.getElements(element);
@@ -418,14 +417,9 @@
       for(let product of thisCart.products){
         thisCart.subtotalPrice += product.price;
         thisCart.totalNumber += product.amount;
-        console.log(product.price);
-        console.log(product.amount);
       }
       thisCart.totalPrice = thisCart.subtotalPrice + thisCart.deliveryFee;
 
-      console.log(this.totalNumber);
-      console.log(this.subtotalPrice);
-      console.log(this.totalPrice);
 
       for(let key of thisCart.renderTotalsKeys){
         for(let elem of thisCart.dom[key]){
@@ -435,9 +429,10 @@
     }
     remove(cartProduct){
       const thisCart = this;
-      const index = thisCart.products[cartProduct];
-      console.log(index);
-      thisCart.products.splice(index);
+      const index = thisCart.products.indexOf(cartProduct);
+      thisCart.products[index].dom.wrapper.remove();
+      thisCart.products.splice(index, 1);
+      thisCart.update();
       
     }
   }
@@ -472,7 +467,6 @@
       const thisCartProduct = this;
       thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidget);
       thisCartProduct.dom.amountWidget.addEventListener('updated', function(){ 
-        console.log('updated');
         thisCartProduct.amount = thisCartProduct.amountWidget.value;
         thisCartProduct.price = thisCartProduct.priceSingle * thisCartProduct.amount;
         thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
@@ -499,7 +493,6 @@
       thisCartProduct.dom.remove.addEventListener('click', function(event){
         event.preventDefault();
         thisCartProduct.remove();
-        console.log(thisCartProduct.remove());
       });
     }
   }
@@ -507,8 +500,6 @@
   const app = {
     initMenu: function(){
       const thisApp = this;
-
-      console.log('thisApp.data:', thisApp.data);
       
       for(let productData in thisApp.data.products){
         new Product(productData, thisApp.data.products[productData]);
