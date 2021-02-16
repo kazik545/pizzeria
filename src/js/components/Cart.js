@@ -58,7 +58,7 @@ class Cart{
   add(menuProduct){
     const thisCart = this;
 
-    console.log('adding product', menuProduct);
+    
 
     const generatedHTML = templates.cartProduct(menuProduct);
 
@@ -67,7 +67,6 @@ class Cart{
     thisCart.dom.productList.appendChild(thisCart.element);
 
     thisCart.products.push(new CartProduct(menuProduct, thisCart.element));
-    console.log('thisCart.products', thisCart.products);
     thisCart.update();
 
   }
